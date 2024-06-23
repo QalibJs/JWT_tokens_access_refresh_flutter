@@ -29,18 +29,29 @@ class LoginScreen extends StatelessWidget {
               hintText: "password",
             ),
           ),
-          BlocListener<AuthCubit, AuthState>(
-              listener: (context, state) {
-                if (state is AuthSuccess) {
-                  context.go(Pager.home);
-                }
-              },
-              child: ElevatedButton(
+          BlocConsumer<AuthCubit, AuthState>(
+            listener: (context, state) {
+              if (state is AuthError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("data")),
+                );
+              } else if (state is AuthSuccess) {
+                context.go(Pager.home);
+              }
+            },
+            builder: (context, state) {
+              return ElevatedButton(
                 onPressed: () {
                   loginCubit.login();
                 },
-                child: const Text("login"),
-              ))
+                child: state is AuthLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : const Text("login"),
+              );
+            },
+          )
         ],
       ),
     );
