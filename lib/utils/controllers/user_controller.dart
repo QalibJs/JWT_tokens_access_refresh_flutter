@@ -9,6 +9,7 @@ class UserController {
 
   static String accessToken = _local.getResponse!.tokens.access;
   static String refreshToken = _local.getResponse!.tokens.refresh;
+  static String email = _local.getResponse!.email;
 
   static clear() {
     _local.clear();

@@ -30,7 +30,7 @@ class AuthService {
     final response = await authDio.post(endpoint, data: queryBody);
 
     if (response.statusCode == 200) {
-      return LoginResponse.fromJson(response.data);
+      return LoginResponse.fromJsonRefresh(response.data);
     }
     throw Exception();
   }
